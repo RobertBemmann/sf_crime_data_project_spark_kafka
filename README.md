@@ -30,30 +30,41 @@ I was running the application in the workspace.
 `spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.3.4 --master local[*] data_stream.py`
 
 console output for events from Kafka topic (binary output)
+
 ![spark_stream_output_df](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/3_spark_stream_output_df.png)
 
-console output for events from Kafka topic (binary output converted to string)  
-`kafka_df = df.selectExpr("CAST(value AS STRING)")`  
+console output for events from Kafka topic (binary output converted to string)    
+
 ![spark_stream_output_kafka_df](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/4_spark_stream_output_kafka_df.png)
 
 console output for service_table (events dataframe with schema)  
+
 ![spark_stream_output_service_table](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/5_spark_stream_output_service_table.png)
 
 console output for distinct_table  
+
 ![spark_stream_output_distinct_table](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/6_spark_stream_output_distinct_table.PNG)
 
 console output for agg_df  
+
 ![spark_stream_output_agg_df](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/7_1_spark_stream_output_agg_df.PNG)
 
-screenshot of progress reporter for agg_df
+screenshot of progress reporter for agg_df  
+
 ![spark_progress_reporter_agg_df](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/7_2_spark_progress_reporter_agg_df.PNG)
 
-screenshot of Spark UI
+screenshot of Spark UI  
+
 ![spark_ui](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/8_spark_ui.PNG)
 
 ## Questions
 
-1.How did changing values on the SparkSession property parameters affect the throughput and latency of the data?
+1.How did changing values on the SparkSession property parameters affect the throughput and latency of the data?  
+Through modifying the configuration values mainly the `inputRowsPerSecond` and the `processedRowsPerSecond` changed.
 
-2.What were the 2-3 most efficient SparkSession property key/value pairs? Through testing multiple variations on values, how can you tell these were the most optimal?
+2.What were the 2-3 most efficient SparkSession property key/value pairs? Through testing multiple variations on values, how can you tell these were the most optimal?  
+I was checking on increasing the value for `processedRowsPerSecond`.  
+spark.sql.shuffle.partitions : 10  
+spark.streaming.kafka.maxRatePerPartition : 10  
+spark.default.parallelism : 100
 
