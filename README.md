@@ -15,33 +15,41 @@ I was running the application in the workspace.
 
 1. Run `bash start.sh` in order to start Zookeeper and Kafka server
 
-2. Ingest data via KafkaProducer and run the Kafka server
+2. Ingest data via KafkaProducer and run the Kafka server  
 `python kafka_server.py`
 
-3. Open new terminal start CLI kafka consumer to see if topic creates events
+3. Open new terminal start CLI kafka consumer to see if topic creates events  
 `kafka-console-consumer --bootstrap-server localhost:9092 --topic com.udacity.crime_calls.v1 --from-beginning`
 ![kafka_console_consumer](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/1_kafka_console_consumer.PNG)
 
-4. Run KafkaConsumer script
+4. Run KafkaConsumer script  
 `python consumer_server.py`
 ![consumer.py_console_output](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/2_consumer_py_console_output.PNG)
 
-5. Debugging for Spark Structured Streaming Application
-console output for 
+5. Run Spark Structured Streaming Application  
+`spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.3.4 --master local[*] data_stream.py`
+
+console output for events from Kafka topic (binary output)
 ![spark_stream_output_df](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/3_spark_stream_output_df.png)
 
+console output for events from Kafka topic (binary output converted to string)  
+`kafka_df = df.selectExpr("CAST(value AS STRING)")`  
 ![spark_stream_output_kafka_df](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/4_spark_stream_output_kafka_df.png)
 
+console output for service_table (events dataframe with schema)  
 ![spark_stream_output_service_table](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/5_spark_stream_output_service_table.png)
 
+console output for distinct_table  
 ![spark_stream_output_distinct_table](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/6_spark_stream_output_distinct_table.PNG)
 
+console output for agg_df  
 ![spark_stream_output_agg_df](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/7_1_spark_stream_output_agg_df.PNG)
 
+screenshot of progress reporter for agg_df
 ![spark_progress_reporter_agg_df](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/7_2_spark_progress_reporter_agg_df.PNG)
 
+screenshot of Spark UI
 ![spark_ui](https://github.com/RobertBemmann/sf_crime_data_project_spark_kafka/blob/master/screenshots/8_spark_ui.PNG)
-
 
 ## Questions
 
